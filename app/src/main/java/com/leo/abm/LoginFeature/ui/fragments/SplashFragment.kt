@@ -16,6 +16,8 @@ import com.leo.abm.CoreFeature.utils.exhaustive
 
 class SplashFragment : Fragment() {
 
+    private val SPLASH_SCREEN_DELAY: Long = 1000
+
     companion object {
         fun newInstance() = SplashFragment()
     }
@@ -48,7 +50,7 @@ class SplashFragment : Fragment() {
                 TODO()
             }
             is SplashViewState.Idle -> {
-                viewModel.goToSignIn()
+                viewModel.goToSignIn(SPLASH_SCREEN_DELAY)
             }
             is SplashViewState.Loading -> {
                 TODO()
