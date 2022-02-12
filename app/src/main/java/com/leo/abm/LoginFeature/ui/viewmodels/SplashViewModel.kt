@@ -7,10 +7,17 @@ import androidx.lifecycle.viewModelScope
 import com.leo.abm.CoreFeature.utils.SingleLiveEvent
 import com.leo.abm.LoginFeature.ui.navigatorstates.SplashNavigatorStates
 import com.leo.abm.LoginFeature.ui.viewstates.SplashViewState
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SplashViewModel : ViewModel() {
+
+@HiltViewModel
+class SplashViewModel @Inject constructor(
+): ViewModel() {
+//class SplashViewModel (): ViewModel() {
 
     private val _navigation = SingleLiveEvent<SplashNavigatorStates>()
     val navigation: LiveData<SplashNavigatorStates> get() = _navigation
@@ -24,7 +31,7 @@ class SplashViewModel : ViewModel() {
     }
 
     fun goToSignIn( delayMs: Long) {
-        viewModelScope.launch {
+        viewModelScope.launch (Dispatchers.Main) {
             delay(delayMs)
             _navigation.value = SplashNavigatorStates.ToSignIn
         }

@@ -13,7 +13,9 @@ import com.leo.abm.LoginFeature.ui.viewmodels.SplashViewModel
 import com.leo.abm.LoginFeature.ui.viewstates.SplashViewState
 import com.leo.abm.databinding.FragmentSplashBinding
 import com.leo.abm.CoreFeature.utils.exhaustive
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SplashFragment : Fragment() {
 
     private val SPLASH_SCREEN_DELAY: Long = 1000
@@ -44,6 +46,16 @@ class SplashFragment : Fragment() {
         viewModel.viewState.observe(viewLifecycleOwner, Observer { handleViewStates(it)})
     }
 
+    private fun handleNavigation(navigation: SplashNavigatorStates) {
+        when(navigation) {
+            SplashNavigatorStates.ToSignIn -> {
+                val action = SplashFragmentDirections.actionSplashFragmentToSignInFragment()
+                findNavController().navigate(action)
+            }
+        }.exhaustive
+
+    }
+
     private fun handleViewStates(state: SplashViewState) {
         when(state) {
             is SplashViewState.Failure -> {
@@ -61,14 +73,5 @@ class SplashFragment : Fragment() {
         }.exhaustive
     }
 
-    private fun handleNavigation(navigator: SplashNavigatorStates) {
-        when(navigator) {
-            SplashNavigatorStates.ToSignIn -> {
-                val action = SplashFragmentDirections.actionSplashFragmentToSignInFragment()
-                findNavController().navigate(action)
-            }
-        }
-
-    }
 
 }
